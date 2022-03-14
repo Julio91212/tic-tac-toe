@@ -1,4 +1,9 @@
-
+function div(name) {
+    let x = document.createElement("div")
+    x.classList.add(name)
+    return x
+}
+console.log(div("home"))
 const gameBoard = (() => {
    let gameBoard = []
    let currentMarker=""
@@ -17,7 +22,10 @@ const gameBoard = (() => {
    }
    function tieGame() {
        alert("You tied!")
+       gameBoard.splice(0, gameBoard.length)
+
    }
+
    function endGame() {
        if (gameBoard[0]==gameBoard[1] && gameBoard[1]==gameBoard[2] && gameBoard[1] !== undefined ||
         gameBoard[0]==gameBoard[3] && gameBoard[3]==gameBoard[6] && gameBoard[3] !== undefined ||
@@ -27,7 +35,7 @@ const gameBoard = (() => {
          gameBoard[6]==gameBoard[7] && gameBoard[7]==gameBoard[8] && gameBoard[7] !==undefined || 
          gameBoard[0]==gameBoard[4] && gameBoard[4]==gameBoard[8] && gameBoard[4] !==undefined ||
          gameBoard[2]==gameBoard[4] && gameBoard[4]==gameBoard[6] && gameBoard[4] !==undefined)
-         {evaluateWinner()} else if (gameBoard.length>8) {tieGame()} else {}
+         {evaluateWinner()} else if (gameBoard.length>8 && gameBoard.includes(undefined)== false) {tieGame()} else {}
 }
     return {gameBoard, evaluateWinner, tieGame, endGame, marker}
 })();
@@ -41,92 +49,20 @@ const Player = (name, marker) => {
 const Player1 = Player("Player 1", "x")
 const Player2 = Player("Player 2", "o")
 
-let box1 = document.getElementById("1")
-let box2 = document.getElementById("2")
-let box3 = document.getElementById("3")
-let box4 = document.getElementById("4")
-let box5 = document.getElementById("5")
-let box6 = document.getElementById("6")
-let box7 = document.getElementById("7")
-let box8 = document.getElementById("8")
-let box9 = document.getElementById("9")
 
-box1.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box1.textContent=="") {
-box1.textContent=currentMarker,
-gameBoard.gameBoard[0] = currentMarker} 
-else {return}
-gameBoard.endGame()})
-
-box2.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box2.textContent=="") {
-box2.textContent=currentMarker,
-gameBoard.gameBoard[1] = currentMarker}
-else {return}
-gameBoard.endGame()
-})
-box3.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box3.textContent=="") {
-box3.textContent=currentMarker,
-gameBoard.gameBoard[2] = currentMarker} 
-else {return}
-gameBoard.endGame()
-})
-box4.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box4.textContent=="") {
-box4.textContent=currentMarker,
-gameBoard.gameBoard[3] = currentMarker} 
-else {return}
-gameBoard.endGame()
-})
-box5.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box5.textContent=="") {
-box5.textContent=currentMarker,
-gameBoard.gameBoard[4] = currentMarker} 
-else {return}
-gameBoard.endGame()
-})
-box6.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box6.textContent=="") {
-box6.textContent=currentMarker,
-gameBoard.gameBoard[5] = currentMarker} 
-else {return}
-gameBoard.endGame()
-})
-box7.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box7.textContent=="") {
-box7.textContent=currentMarker,
-gameBoard.gameBoard[6] = currentMarker} 
-else {return}
-gameBoard.endGame()
-})
-box8.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box8.textContent=="") {
-box8.textContent=currentMarker,
-gameBoard.gameBoard[7] = currentMarker} 
-else {return}
-gameBoard.endGame()
-})
-box9.addEventListener("click", () => 
-{let currentMarker=gameBoard.marker()
-if (box9.textContent=="") {
-box9.textContent=currentMarker,
-gameBoard.gameBoard[8] = currentMarker} 
-else {return}
-gameBoard.endGame()
-})
-// box.forEach((div) => 
-// div.addEventListener("click", () => 
-// {div.textContent=Player1.getMarker()}))
-//when a div is clicked, it will display the marker of the player
+let boxes = document.querySelectorAll("div.box")
+boxes.forEach(item => {
+    item.addEventListener("click", () => {
+    let currentMarker=gameBoard.marker()
+    if (item.textContent=="") {
+    item.textContent=currentMarker
+    let i = item.id - 1
+    console.log(i)
+    gameBoard.gameBoard[i] = currentMarker} 
+    else {return}
+    gameBoard.endGame() 
+    console.table(gameBoard.gameBoard)
+})})
 
 const openform = document.querySelector("button.newGame")
 const overlay = document.getElementById("overlay")
